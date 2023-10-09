@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Shirt Order Form</title>
+</head>
+<body>
+    <h1 align="center">T-Shirt Order</h1>
+    
+    <div align="center">
+       
+    </div>
+    <br><br>    
+
+    <div align="center">
+        <table border="1">
+            <tr>
+                <td>
+                    <form action="submit" onsubmit="return validateForm() && generateReceipt()">
+                        <label for="tagline"><strong>Tagline on the Shirt:</strong></label>
+                        <input type="text" id="tagline" required>
+                        <br><br>
+
+                        <label><strong>Size:</strong></label>
+                        <select id="size" required>
+                            <option value="">Select Size</option>
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large</option>
+                            <option value="x-large">X-Large</option>
+                        </select>
+                        <br><br>
+
+                        <label><strong>Quantity:</strong></label>
+                        <input type="number" id="quantity" min="1" required>
+                        <br><br>
+
+                        <label><strong>Color:</strong></label>
+                        <input type="text" id="color" required>
+                        <br><br>
+
+                        <label for="mobile"><strong>Mobile Number:</strong></label>
+                        <input type="tel" id="mobile" pattern="[0-9]{10}" required>
+                        <br><br>
+
+                        <label><strong>Type of Delivery:</strong></label>
+                        <input type="radio" name="delivery" value="Express" required>Express
+                        <input type="radio" name="delivery" value="Regular" required>Regular
+                        <br><br>
+
+                        <label><strong>Shipping Address:</strong></label><br>
+                        <textarea id="shippingAddress" rows="5" cols="100" required></textarea>
+                        <br><br>
+
+                        <div align="center"><button type="submit">Submit</button></div>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function validateForm() {
+            var tagline = document.getElementById("tagline").value;
+            var mobile = document.getElementById("mobile").value;
+
+            if (tagline.length > 50) {
+                alert("Tagline should not exceed 50 characters.");
+                return false;
+            }
+
+            // Validate the mobile number (exactly 10 digits)
+            if (!/^\d{10}$/.test(mobile)) {
+                alert("Mobile number should be exactly 10 digits.");
+                return false;
+            }
+            return true;
+        }
+
+        function generateReceipt() {
+            var currentDate = new Date();
+            var formattedDate = currentDate.toLocaleString();
+
+            // Get the order details from the form
+            var tagline = document.getElementById("tagline").value;
+            var size = document.getElementById("size").value;
+            var quantity = document.getElementById("quantity").value;
+            var color = document.getElementById("color").value;
+            var delivery = document.querySelector('input[name="delivery"]:checked').value;
+            var shippingAddress = document.getElementById("shippingAddress").value;
+
+            var receiptMessage = `
+                Order Receipt
+                Date: ${formattedDate}
+                ---------------------------
+                Tagline: ${tagline}
+                Size: ${size}
+                Quantity: ${quantity}
+                Color: ${color}
+                Mobile Number: ${mobile} <!-- Added mobile number -->
+                Delivery Type: ${delivery}
+                Shipping Address: ${shippingAddress}
+                ---------------------------
+                Thank you for your order!
+            `;
+
+            alert(receiptMessage);
+        }
+    </script>
+</body>
+</html>
